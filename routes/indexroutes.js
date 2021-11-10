@@ -1,15 +1,22 @@
 const {Router} = require('express');
+const task = require('../models/task');
 const router = Router()
-
+const Task = require('../models/task')
 
 // Nos regresaria las tareas guardadas en la BD con el método find(). Una vez obtenidas las tareas las regresamos a la pagina principal.
 router.get('/', async function(req,res){
-res.render('index')
+  var tasks = await Task.find()
+  console.log(tasks)
+  res.render('index',{tasks})
 });
 
 // Ruta que nos permita agregar nuevas tareas que vienen desde un metodo post. Una vez enviada la tarea podemos redireccionar a la pagina principal con res.redirect('/')
 router.post('/add', async (req,res) =>{
 
+  var task = new Task(req.body)
+  console.log(task)
+  await task.save()
+  res.redirect('/')
 });
 
 // Ruta para editar los datos. Primero necesitamos buscarlos en base a un id que ya me llega desde la ruta. Metodo de busqueda findById(). 
@@ -27,12 +34,19 @@ router.post('/edit/:id',   async(req,res) =>{
 // Esta ruta permita modificar el estatus de una tarea por medio de su propiedad status. 
 // Necesitamos buscar el task en la BD por medio de findById, una vez encontrado el registro hay que modificar el status y guardar con save(). 
 router.get('/turn/:id', async (req, res, next) => {
+  var id = req.params.id
+  var task = await Task.findById(id)
+  task.status = !task.status //cambio de valor de status
 
-  });
+  await task.save()
+  res.redirect('/')
+});
 
 // Ruta que nos permita eliminar tareas con el método "deleteOne"
 router.get('/delete/:id',  async (req,res) =>{
-
+  var id = req.params.id
+  await Task.remove({_id: id})
+  res.redirect('/')
 })
 
 module.exports = router; 

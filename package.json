@@ -1,7 +1,6 @@
 {
   "name": "skeleton",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,5 +16,14 @@
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juanpabdl/skeleton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Juanpabdl/skeleton/issues"
+  },
+  "homepage": "https://github.com/Juanpabdl/skeleton#readme",
+  "description": ""
 }
