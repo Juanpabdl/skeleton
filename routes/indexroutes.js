@@ -22,14 +22,18 @@ router.post('/add', async (req,res) =>{
 // Ruta para editar los datos. Primero necesitamos buscarlos en base a un id que ya me llega desde la ruta. Metodo de busqueda findById(). 
 // Los editaremos en una pagina aparte llamada 'edit'
 router.get('/edit/:id',   async(req,res) =>{
-
+  var id = req.params.id
+  var task = await Task.findById(id)
+  res.render('edit',{task})
 })
 
 
 // Ruta para efectuar la actualizacion de los datos utilizando el metodo update()
 router.post('/edit/:id',   async(req,res) =>{
-
-    })
+  var id = req.params.id
+  await Task.updateOne({_id: id}, req.body)
+  res.redirect('/');
+})
 
 // Esta ruta permita modificar el estatus de una tarea por medio de su propiedad status. 
 // Necesitamos buscar el task en la BD por medio de findById, una vez encontrado el registro hay que modificar el status y guardar con save(). 
